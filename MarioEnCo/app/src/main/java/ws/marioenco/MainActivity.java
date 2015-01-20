@@ -19,13 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import ws.marioenco.Controllers.ServicesController;
 import ws.marioenco.Helpers.ClientHelper;
 import ws.marioenco.Helpers.CustomOnItemSelectedListener;
 
 
 public class MainActivity extends Activity {
 
-    public String ipAdress = "192.168.178.12";
+   // public String ipAdress = "192.168.178.12";
     TextView bisInfo;
     Button nextButton;
     Spinner spinner1;
@@ -102,51 +103,9 @@ public class MainActivity extends Activity {
 
     public void sendIP(View view){
 
+        ServicesController servicesController = new ServicesController();
 
-
-
-
-        //aanmaken van een nieuw jsonobject
-        JSONObject categorieJObject = new JSONObject();
-        try
-        {
-            //verzenden van het jsonobject
-            categorieJObject.put("servicelijst","");
-
-//            { “servicelijst” : “” }
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-
-        String reactie = null;
-        try
-        {
-            try
-            {
-                //servercommunicator proberen te verbinden met de server
-                  reactie = new ClientHelper( this, ipAdress, 4444, categorieJObject.toString()).execute().get();
-        //        reactie = new ClientHelper( this, ipAdress, 4444,"informatie").execute().get();
-
-
-
-                Log.v("debug",reactie);
-            }
-            catch (ExecutionException e)
-            {
-                e.printStackTrace();
-            }
-        }
-        catch (InterruptedException e1)
-        {
-            e1.printStackTrace();
-        }
-
-
-
-
-
+        servicesController.getServices(MainActivity.this);
 
 
     }

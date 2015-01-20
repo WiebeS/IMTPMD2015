@@ -76,7 +76,8 @@
                 android:textSize="50dp"
                 android:layout_weight="7"
                 android:background="@color/marioRood"
-                android:textColor="@color/marioWhite" />
+                android:textColor="@color/marioWhite"
+                android:onClick="sendIP" />
 
         </LinearLayout>
 
