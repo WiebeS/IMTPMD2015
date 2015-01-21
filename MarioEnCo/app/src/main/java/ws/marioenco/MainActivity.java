@@ -1,11 +1,14 @@
 package ws.marioenco;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -23,15 +26,21 @@ import java.util.concurrent.ExecutionException;
 import ws.marioenco.Controllers.ServicesController;
 import ws.marioenco.Helpers.ClientHelper;
 import ws.marioenco.Helpers.CustomOnItemSelectedListener;
+import ws.marioenco.Models.InformatieServiceBeknoptModel;
+import ws.marioenco.Models.ServiceLijstModel;
 import ws.marioenco.Models.Settings;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     // public String ipAdress = "192.168.56.1";
-    TextView bisInfo;
+    TextView bisInfo,serviceTag,serviceInfo;
     Button nextButton;
     Spinner spinner1;
+
+    Settings settingsData = Settings.getInstance();
+    ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
+    InformatieServiceBeknoptModel informatieServiceBeknoptModel = InformatieServiceBeknoptModel.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,45 +48,44 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         bisInfo = (TextView) findViewById(R.id.bisInfoTextView);
-        //  bisInfo.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.");
+        serviceTag = (TextView) findViewById(R.id.serviceTextView);
+        serviceInfo = (TextView) findViewById(R.id.servicesInfoShort);
 
         nextButton = (Button) findViewById(R.id.nextButton);
-
-
         spinner1 = (Spinner) findViewById(R.id.spinner);
+
+// Inladen van de service Lijst
         List<String> list = new ArrayList<String>();
-        list.add("Riolering");
-        list.add("Lekkage");
-        list.add("Prinses in nood");
+
+        if (settingsData.getisOnline() == true){
+             list = serviceLijstModel.getServicesLijst();
+        }
+        else if (settingsData.getisOnline() == false) {
+        // TODO data gesaved ophalen
+            list.add("Riolering1");
+            list.add("Lekkage1");
+            list.add("Prinses in nood1");
+        }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item, list);
+                (this, R.layout.spinneritem, list);
 
         dataAdapter.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
-
 
         spinner1.setAdapter(dataAdapter);
 
         // Spinner item selection Listener
         addListenerOnSpinnerItemSelection();
 
-//        // Button click Listener
-//        addListenerOnButton();
+        // TODO filteren van connectie
+// Alleen uitvoeren als de app connectie met de server heeft
 
-
-    }
-
+}
     // Add spinner data
-
     public void addListenerOnSpinnerItemSelection() {
-
-        spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+    spinner1.setOnItemSelectedListener(this);
     }
-
-    //get the selected dropdown list value
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,13 +108,37 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendIP(View view) {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
+//        Toast.makeText(parent.getContext(),
+//                "On Item Select : \n" + parent.getItemAtPosition(pos).toString(),
+//                Toast.LENGTH_LONG).show();
+
+        // Het saven van de geselecteerde service
+        serviceLijstModel.setSelectedService(pos);
+        // Vullen van textveld welke een kopje is van de beknopte beschrijving
+        serviceTag.setText(serviceLijstModel.getServicesLijst().get(pos));
+
+        // Ophalen van de beknopte informatie
+        getServicesInfoShort();
+
+        Log.v("wiebe","HIER?");
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+// Functie om de beknopte informatie op te halen en het model te vullen
+    public void getServicesInfoShort() {
         //aanmaken van een nieuw jsonobject
-        JSONObject serviceObject = new JSONObject();
+        JSONObject infoObject = new JSONObject();
+
         try {
             //verzenden van het jsonobject
-            serviceObject.put("informatie","Riolering");
+            infoObject.put("informatiebeknopt",(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService())));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,11 +146,9 @@ public class MainActivity extends Activity {
 
         String reactie = "string";
         {
-            Settings settingsData = Settings.getInstance();
-
             //servercommunicator proberen te verbinden met de server
             try {
-                reactie = new ClientHelper(this, settingsData.getIp4Adress(), 4444, serviceObject.toString()).execute().get();
+                reactie = new ClientHelper(this, settingsData.getIp4Adress(), 4444, infoObject.toString()).execute().get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -127,26 +157,71 @@ public class MainActivity extends Activity {
             //        reactie = new ClientHelper( this, ipAdress, 4444,"informatie").execute().get();
 
             // TODO De reactie doorloopen, en weer een JSON van bouwen?!
-            Log.v("wiebe", reactie + "   ");
 
-//            JSONArray reactieArray = null;
-//            try
-//            {
-//                reactieArray = new JSONArray(reactie);
+
+            try {
+                JSONObject shortInfo = new JSONObject(reactie);
+
+                String shortInfoString = shortInfo.getString("informatiebeknopt");
+
+                informatieServiceBeknoptModel.setShortInfoService(shortInfoString);
+            //    Log.v("wiebe", test);
+
+                serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+//            JSONArray services = null;
+//            try {
+//                services = new JSONArray(reactie);
 //
-//                Log.v("wiebe", "wiebe"+reactieArray);
-//            }
-//            catch (JSONException e)
-//            {
+//                //  String test = String.valueOf(services.get("naam"));
+//
+//                Log.v("wiebe", "JA" );
+//
+//            } catch (JSONException e) {
 //                e.printStackTrace();
-//                Log.v("wiebe", "wiebe"+reactieArray);
-//
 //            }
-
+//
+//
+//            for (int i = 0 ; i < services.length(); i++)
+//            {
+//                ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
+//
+//                //     ArrayList<String> servicesLijst = new ArrayList<String>();
+//
+//                try {
+//                    JSONObject value = services.getJSONObject(i);
+//
+//                    String valueString = value.getString("naam");
+//
+//                    Log.v("wiebe", "JA" + i + valueString);
+//
+//                    serviceLijstModel.addService(valueString);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }
 
     }
+
+
+// functie om met de button verder te gaan naar de volgende pagina.
+    public void goToServicePage(View view){
+
+        // Load next page
+        Intent intent = new Intent(this, ServiceActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 }
+
 //            Voor elke service ontvangen 1 opslaan
 //
 //            for(String test : reactie ){

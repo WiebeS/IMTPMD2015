@@ -5,7 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <string name="businessInfo">Cow meatball venison pancetta pork porchetta. Swine shoulder sirloin ham hock sausage flank ground round pork loin kevin strip steak porchetta alcatra salami fatback. Swine andouille biltong filet mignon fatback rump pork belly spare ribs landjaeger prosciutto tongue meatloaf short ribs pig salami..</string>
+    <string name="busName">MarioCo</string>
+    <string name="businessInfo">MarioCo loodgieters, voor al uw loodgieters werk en meer!! Selecteer onderin een van onze services!!!</string>
+    <string name="LoginText">Vul hier uw IP in:</string>
 
 
 </resources>

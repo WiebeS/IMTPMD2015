@@ -16,10 +16,26 @@ public class Settings {
     }
 //"192.168.56.1";
 
+
+
+    private boolean online = true;
     private String ip4Adress = "192.168.178.12";
 
     public String getIp4Adress()
     {
-            return ip4Adress;
+        return ip4Adress;
     }
+
+    public void setIp4Adress(String ip4Adress) {
+        this.ip4Adress = ip4Adress;
+    }
+
+    public boolean getisOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
 }

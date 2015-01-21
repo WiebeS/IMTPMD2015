@@ -53,16 +53,8 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/businessInfo"
-                android:id="@+id/bisInfoTextView"
-                android:textSize="25dp"
-                android:layout_margin="8dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:text="Service"
-                android:id="@+id/serviceTextView"
+                android:id="@+id/serviceTextViewService"
                 android:layout_margin="8dp"
                 android:layout_marginTop="16dp"
                 android:textSize="25dp"
@@ -71,8 +63,19 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/servicesInfoShort"
+                android:text="ServiceInfo"
+                android:id="@+id/servicesInfoLong"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_margin="8dp"
+                android:textSize="25dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Ga door om de service aan te vragen->"
+                android:id="@+id/textView2"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="8dp"
                 android:layout_margin="8dp"
@@ -89,23 +92,27 @@
             android:layout_weight="13"
             android:weightSum="10">
 
-            <Spinner
+            <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/spinner"
-                android:layout_weight="3"
-                android:spinnerMode="dropdown" />
+                android:text="&lt;"
+                android:id="@+id/backButtonService"
+                android:textSize="50dp"
+                android:background="@color/marioRood"
+                android:textColor="@color/marioWhite"
+                android:onClick="prevPage"
+                android:layout_weight="5" />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text=">"
-                android:id="@+id/nextButton"
+                android:id="@+id/nextButtonService"
                 android:textSize="50dp"
-                android:layout_weight="7"
                 android:background="@color/marioRood"
                 android:textColor="@color/marioWhite"
-                android:onClick="goToServicePage" />
+                android:onClick="nextPage"
+                android:layout_weight="5" />
 
         </LinearLayout>
 

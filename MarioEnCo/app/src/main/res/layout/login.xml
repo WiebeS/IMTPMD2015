@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:background="@color/marioRood">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/busName"
+                android:id="@+id/textView"
+                android:textColor="@color/marioWhite"
+                android:textSize="50dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:layout_margin="8dp" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imageView2"
+                android:layout_gravity="center"
+                android:background="@drawable/logo"
+                android:layout_margin="8dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/LoginText"
+                android:id="@+id/textViewIP"
+                android:background="@color/marioRood"
+                android:textColor="@color/marioWhite"
+                android:textSize="30dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextIP"
+                android:background="@color/marioWhite"
+                android:textSize="25dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:id="@+id/loginButton"
+                android:background="@color/marioRood"
+                android:onClick="login"
+                android:textColor="@color/marioWhite"
+                android:textSize="30dp"
+                android:layout_margin="8dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
