@@ -58,13 +58,12 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView2"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="8dp"
+                    android:text="Service"
+                    android:id="@+id/serviceTextViewService"
                     android:layout_margin="8dp"
-                    android:textSize="22dp"
-                    android:textStyle="italic"
-                    android:text="@string/VoorIn" />
+                    android:layout_marginTop="16dp"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -78,101 +77,13 @@
                     android:textStyle="italic" />
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Service"
-                    android:id="@+id/serviceTextViewService"
+                    android:text="@string/Gadoor"
+                    android:id="@+id/textView2"
                     android:layout_margin="8dp"
-                    android:layout_marginTop="16dp"
-                    android:textSize="25dp"
-                    android:textStyle="bold" />
+                    android:textSize="22dp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Naam"
-                        android:id="@+id/Naam"
-                        android:layout_weight="2" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editTextNaam"
-                        android:layout_weight="8" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Adres"
-                        android:id="@+id/textView3"
-                        android:layout_weight="2" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText"
-                        android:layout_weight="8" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Tel"
-                        android:id="@+id/textView4"
-                        android:layout_weight="2" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText2"
-                        android:layout_weight="8" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Email"
-                        android:id="@+id/textView5"
-                        android:layout_weight="2" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/editText3"
-                        android:layout_weight="8" />
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

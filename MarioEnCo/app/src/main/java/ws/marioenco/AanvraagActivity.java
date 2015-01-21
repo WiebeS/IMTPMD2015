@@ -3,10 +3,13 @@ package ws.marioenco;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,37 +21,37 @@ import ws.marioenco.Models.InformatieServiceBeknoptModel;
 import ws.marioenco.Models.InformatieServiceModel;
 import ws.marioenco.Models.ServiceLijstModel;
 import ws.marioenco.Models.Settings;
+import ws.marioenco.Models.UserGegevensModel;
 
 
 public class AanvraagActivity extends Activity  {
 
-    // public String ipAdress = "192.168.56.1";
     TextView serviceTag,serviceInfo;
-
+    EditText naam,adres,tel,mail;
 
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
     InformatieServiceModel informatieServiceModel = InformatieServiceModel.getInstance();
     InformatieServiceBeknoptModel informatieServiceBeknoptModel = InformatieServiceBeknoptModel.getInstance();
+    UserGegevensModel userGegevensModel = UserGegevensModel.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aanvraag);
 
-          serviceTag = (TextView) findViewById(R.id.serviceTextViewServiceAanvraag);
-          serviceInfo = (TextView) findViewById(R.id.servicesInfoAanvraag);
+        serviceTag = (TextView) findViewById(R.id.serviceTextViewServiceAanvraag);
+        serviceInfo = (TextView) findViewById(R.id.servicesInfoAanvraag);
 
-//// TODO data gesaved ophalen
-//            list.add("Riolering1");
-//            list.add("Lekkage1");
-//            list.add("Prinses in nood1");
+        naam = (EditText) findViewById(R.id.naamEdit);
+        adres = (EditText) findViewById(R.id.adresEdit);
+        tel = (EditText) findViewById(R.id.telEdit);
+        mail = (EditText) findViewById(R.id.mailEdit);
 
-        // TONEN VAN GESELECTEERDE SERVICE
         serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
         // Tonen van beknopte info
         serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
-        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,10 +75,64 @@ public class AanvraagActivity extends Activity  {
         return super.onOptionsItemSelected(item);
     }
 
+    public boolean getUserGegevens()
+    {
+        boolean compleet = true;
+        if (naam.getText().length() > 3){
+            userGegevensModel.setUserNaam(String.valueOf(naam.getText()));
+            compleet = true;
+        }
+        else{
+            Toast.makeText(this,"Voer uw Naam in",
+                    Toast.LENGTH_SHORT).show();
+            compleet = false;
+        }
+
+        if (adres.getText().length() > 3){
+            userGegevensModel.setUserAdres(String.valueOf(adres.getText()));
+            compleet = true;
+        }
+        else{
+            Toast.makeText(this,"Voer uw Adres in",
+                    Toast.LENGTH_SHORT).show();
+            compleet = false;
+
+        }
+
+        if (tel.getText().length() > 3){
+            userGegevensModel.setUserTel(String.valueOf(tel.getText()));
+            compleet = true;
+        }
+        else{
+            Toast.makeText(this,"Voer uw tel in",
+                    Toast.LENGTH_SHORT).show();
+            compleet = false;
+
+        }
+
+        if (mail.getText().length() > 3){
+            userGegevensModel.setUserNaam(String.valueOf(mail.getText()));
+            compleet = true;
+        }
+        else{
+            Toast.makeText(this,"Voer uw Email in",
+                    Toast.LENGTH_SHORT).show();
+            compleet = false;
+
+        }
+        return compleet;
+    }
+
+    // functie om met de button verder te gaan naar de volgende pagina.
+    public void aanvraag(View view){
+
+        Log.v("wiebe", String.valueOf(getUserGegevens()));
+
+        if (settingsData.getisOnline() == true)
+        {
 
 
-// functie om met de button verder te gaan naar de volgende pagina.
-    public void nextPage(View view){
+        }
 
     }
 
