@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -75,6 +76,7 @@ public class AanvraagActivity extends Activity  {
         return super.onOptionsItemSelected(item);
     }
 
+    // Get user gegevens uit de textfields
     public boolean getUserGegevens()
     {
         boolean compleet = true;
@@ -126,12 +128,17 @@ public class AanvraagActivity extends Activity  {
     // functie om met de button verder te gaan naar de volgende pagina.
     public void aanvraag(View view){
 
-        Log.v("wiebe", String.valueOf(getUserGegevens()));
+   //     Log.v("wiebe", String.valueOf(getUserGegevens()));
 
-        if (settingsData.getisOnline() == true)
+        if (settingsData.getisOnline() == true && getUserGegevens() == true)
         {
+            // Verzend de aanvraag
+            getAanvraag();
+        }
 
-
+        else{
+            Toast.makeText(this,"Geen aanvraag mogelijk ivm connectie",
+                    Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -141,5 +148,89 @@ public class AanvraagActivity extends Activity  {
         Intent intent = new Intent(this, ServiceActivity.class);
         startActivity(intent);
         finish();
+    }
+
+// TODO HIER BEZIG
+
+    // Functie om de aanvraag te verwerken
+    public void getAanvraag() {
+        //aanmaken van een nieuw jsonobject
+        JSONObject sendObject = new JSONObject();
+// Opbouwen van de te verzenden json array
+        JSONArray koperInfoArray = new JSONArray();
+// Voeg de service naam toe
+        JSONObject serviceNameObject = new JSONObject();
+        try {
+            serviceNameObject.put("servicenaam",serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        koperInfoArray.put(serviceNameObject);
+   // Voeg de naam toe
+        JSONObject nameObject = new JSONObject();
+        try {
+            nameObject.put("kopernaam",userGegevensModel.getUserNaam());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        koperInfoArray.put(nameObject);
+   // Voeg de adres toe
+        JSONObject adresObject = new JSONObject();
+        try {
+            adresObject.put("koperadres",userGegevensModel.getUserAdres());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        koperInfoArray.put(adresObject);
+
+        // Voeg de telnr toe
+        JSONObject telnrObject = new JSONObject();
+        try {
+            telnrObject.put("kopertelnr",userGegevensModel.getUserTel());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        koperInfoArray.put(telnrObject);
+
+        // Voeg de email toe
+        JSONObject emailObject = new JSONObject();
+        try {
+            emailObject.put("koperemail","MEHEHHEH");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        koperInfoArray.put(emailObject);
+
+
+
+
+
+        //
+        try {
+            //verzenden van het jsonobject
+            sendObject.put("aanvraag",koperInfoArray);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String reactie = "string";
+        {
+            //servercommunicator proberen te verbinden met de server
+            try {
+                reactie = new ClientHelper(this, settingsData.getIp4Adress(), 4444, sendObject.toString()).execute().get();
+
+                Log.v("wiebe`",reactie);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            Log.v("wiebe12",reactie);
+
+
+        }
+        Log.v("wiebeqqwqw3",reactie);
     }
 }
