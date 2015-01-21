@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.concurrent.ExecutionException;
-
 import ws.marioenco.Helpers.ClientHelper;
 import ws.marioenco.Models.InformatieServiceBeknoptModel;
 import ws.marioenco.Models.InformatieServiceModel;
