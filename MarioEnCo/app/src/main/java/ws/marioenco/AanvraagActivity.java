@@ -110,7 +110,7 @@ public class AanvraagActivity extends Activity  {
         }
 
         if (mail.getText().length() > 3){
-            userGegevensModel.setUserNaam(String.valueOf(mail.getText()));
+            userGegevensModel.setUserMail(String.valueOf(mail.getText()));
             compleet = true;
         }
         else{
@@ -163,47 +163,24 @@ public class AanvraagActivity extends Activity  {
             e.printStackTrace();
         }
         koperInfoArray.put(serviceNameObject);
+
+
    // Voeg de naam toe
-        JSONObject nameObject = new JSONObject();
+        JSONObject koperObject = new JSONObject();
         try {
-            nameObject.put("kopernaam",userGegevensModel.getUserNaam());
+            koperObject.put("kopernaam",userGegevensModel.getUserNaam());
+            koperObject.put("koperadres",userGegevensModel.getUserAdres());
+            koperObject.put("kopertelnr",userGegevensModel.getUserTel());
+            koperObject.put("koperemail",userGegevensModel.getUserMail());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        koperInfoArray.put(nameObject);
-   // Voeg de adres toe
-        JSONObject adresObject = new JSONObject();
+        koperInfoArray.put(koperObject);
+
+
         try {
-            adresObject.put("koperadres",userGegevensModel.getUserAdres());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        koperInfoArray.put(adresObject);
-
-        // Voeg de telnr toe
-        JSONObject telnrObject = new JSONObject();
-        try {
-            telnrObject.put("kopertelnr",userGegevensModel.getUserTel());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        koperInfoArray.put(telnrObject);
-
-        // Voeg de email toe
-        JSONObject emailObject = new JSONObject();
-        try {
-            emailObject.put("koperemail","MEHEHHEH");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        koperInfoArray.put(emailObject);
 
 
-
-
-
-        //
-        try {
             //verzenden van het jsonobject
             sendObject.put("aanvraag",koperInfoArray);
 
@@ -217,17 +194,25 @@ public class AanvraagActivity extends Activity  {
             try {
                 reactie = new ClientHelper(this, settingsData.getIp4Adress(), 4444, sendObject.toString()).execute().get();
 
-                Log.v("wiebe`",reactie);
+                aanvraagVoltooid(reactie);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-
-            Log.v("wiebe12",reactie);
-
-
         }
-        Log.v("wiebeqqwqw3",reactie);
+    }
+
+
+    public void aanvraagVoltooid(String string){
+        Toast.makeText(this,string,
+                Toast.LENGTH_LONG).show();
+
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
+
     }
 }

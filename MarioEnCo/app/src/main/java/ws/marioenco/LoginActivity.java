@@ -40,10 +40,7 @@ public class LoginActivity extends Activity {
         textViewIP = (TextView) findViewById(R.id.textViewIP);
         loginButton = (Button) findViewById(R.id.loginButton);
 
-
-
         ipEdit.setText(settingsData.getIp4Adress());
-
     }
 
 
@@ -55,7 +52,7 @@ public class LoginActivity extends Activity {
           if (settingsData.getisOnline() == true){
           getServices();
         }
-// Load next page
+        // Load next page
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
