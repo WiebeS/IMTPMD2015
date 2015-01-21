@@ -5,7 +5,6 @@ package ws.marioenco.Models;
  */
 public class Settings {
 
-
         //singleton pattern
         private static Settings _instance;
     public static Settings getInstance()
@@ -15,9 +14,9 @@ public class Settings {
 
         return _instance;
     }
+//"192.168.56.1";
 
-
-    private String ip4Adress =  "192.168.178.12";
+    private String ip4Adress = "192.168.178.12";
 
     public String getIp4Adress()
     {

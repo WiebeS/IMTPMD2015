@@ -22,101 +22,121 @@ import java.net.UnknownHostException;
 public class ClientHelper  extends AsyncTask<Void, Void, String>
 {
 
-private String message;
-private String ip;
-private String reactie = null;
-private int port;
-private Context context;
+    private String message;
+    private String ip;
+    private String reactie = null;
+    private int port;
+    private Context context;
 
 
-public ClientHelper(Context context, String ip, int port, String message  )
-        {
+    public ClientHelper(Context context, String ip, int port, String message  )
+    {
         // Variabelen welke de communicator nodig heeft.
 
         this.context = context;
         this.message = message;
         this.ip = ip;
         this.port = port;
-        }
+    }
 
-//Deze methode verzend de gegevens naar de server
-private void sendMessage( String message, Socket serverSocket )
-        {
+    //Deze methode verzend de gegevens naar de server
+    private void sendMessage( String message, Socket serverSocket )
+    {
         OutputStreamWriter outputStreamWriter = null;
 
         try
         {
-        outputStreamWriter = new OutputStreamWriter(serverSocket.getOutputStream());
+            outputStreamWriter = new OutputStreamWriter(serverSocket.getOutputStream());
         }
 
         catch (IOException e1)
         {
-        e1.printStackTrace();
+            e1.printStackTrace();
         }
 
         if( outputStreamWriter != null )
         {
 
-        BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
 
-        PrintWriter writer = new PrintWriter( bufferedWriter, true );
+            PrintWriter writer = new PrintWriter( bufferedWriter, true );
 
-        writer.println(message);
+            writer.println(message);
         }
-        }
+    }
 
 
-@Override
-protected String doInBackground(Void... params)
-        {
+    @Override
+    protected String doInBackground(Void... params)
+    {
         try
         {
-        Socket serverSocket = new Socket();
-        serverSocket.connect( new InetSocketAddress( this.ip, this.port ), 4000 );
+            Socket serverSocket = new Socket();
+            serverSocket.connect( new InetSocketAddress( this.ip, this.port ), 4000 );
 
-        //verzend een bericht naar de server
-        this.sendMessage(message, serverSocket);
+            //verzend een bericht naar de server
+            this.sendMessage(message, serverSocket);
 
-        InputStream input;
+            InputStream input;
 
-        //zorgt voor een reactie van de server
-        try
-        {
-        input = serverSocket.getInputStream();
-        BufferedReader reactieStreamReader = new BufferedReader(new InputStreamReader(input));
-        String line = "";
-        StringBuilder stringBouwer = new StringBuilder();
+            //zorgt voor een reactie van de server
+            try
+            {
+                input = serverSocket.getInputStream();
+                BufferedReader reactieStreamReader = new BufferedReader(new InputStreamReader(input));
 
-        while ((line = reactieStreamReader.readLine()) != null)
-        {
-        stringBouwer.append(line);
-        }
-        reactieStreamReader.close();
+                StringBuilder stringBouwer = new StringBuilder();
 
-        this.reactie = stringBouwer.toString();
-        }
-        catch (IOException e)
-        {
-        e.printStackTrace();
-        }
+// TODO   hier nalopen waarom de NULL er niet uitgefulterd wordt
+                // Er is nu de I ingevoegd zodat er pas 1 x draaien een string wordt toegevoegd
+
+                int i =0;
+
+                String line;
+
+                while ((line = reactieStreamReader.readLine()) != null)
+                {
+
+                    if(i <= 0){
+
+                    }
+                    else{
+                        stringBouwer.append(line);
+                        Log.v("fixen-->",line+i);
+
+                    }
+
+
+                    i++;
+
+
+                }
+                reactieStreamReader.close();
+
+                this.reactie = stringBouwer.toString();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
         catch( UnknownHostException e )
         {
-        Log.d("debug", "can't find host");
+            Log.d("debug", "can't find host");
         }
 
         catch( SocketTimeoutException e )
         {
-        Log.d("debug", "time-out");
+            Log.d("debug", "time-out");
         }
 
         catch (IOException e)
         {
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
         return reactie;
-        }
+    }
 
-        }
+}

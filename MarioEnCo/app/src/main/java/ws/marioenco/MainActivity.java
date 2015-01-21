@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,11 +23,12 @@ import java.util.concurrent.ExecutionException;
 import ws.marioenco.Controllers.ServicesController;
 import ws.marioenco.Helpers.ClientHelper;
 import ws.marioenco.Helpers.CustomOnItemSelectedListener;
+import ws.marioenco.Models.Settings;
 
 
 public class MainActivity extends Activity {
 
-   // public String ipAdress = "192.168.178.12";
+    // public String ipAdress = "192.168.56.1";
     TextView bisInfo;
     Button nextButton;
     Spinner spinner1;
@@ -37,7 +39,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         bisInfo = (TextView) findViewById(R.id.bisInfoTextView);
-      //  bisInfo.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.");
+        //  bisInfo.setText("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.");
 
         nextButton = (Button) findViewById(R.id.nextButton);
 
@@ -49,11 +51,10 @@ public class MainActivity extends Activity {
         list.add("Prinses in nood");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item,list);
+                (this, android.R.layout.simple_spinner_item, list);
 
         dataAdapter.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
-
 
 
         spinner1.setAdapter(dataAdapter);
@@ -69,14 +70,12 @@ public class MainActivity extends Activity {
 
     // Add spinner data
 
-    public void addListenerOnSpinnerItemSelection(){
+    public void addListenerOnSpinnerItemSelection() {
 
         spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
     }
 
     //get the selected dropdown list value
-
-
 
 
     @Override
@@ -101,12 +100,79 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void sendIP(View view){
+    public void sendIP(View view) {
 
-        ServicesController servicesController = new ServicesController();
+        //aanmaken van een nieuw jsonobject
+        JSONObject serviceObject = new JSONObject();
+        try {
+            //verzenden van het jsonobject
+            serviceObject.put("informatie","Riolering");
 
-        servicesController.getServices(MainActivity.this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        String reactie = "string";
+        {
+            Settings settingsData = Settings.getInstance();
+
+            //servercommunicator proberen te verbinden met de server
+            try {
+                reactie = new ClientHelper(this, settingsData.getIp4Adress(), 4444, serviceObject.toString()).execute().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            //        reactie = new ClientHelper( this, ipAdress, 4444,"informatie").execute().get();
+
+            // TODO De reactie doorloopen, en weer een JSON van bouwen?!
+            Log.v("wiebe", reactie + "   ");
+
+//            JSONArray reactieArray = null;
+//            try
+//            {
+//                reactieArray = new JSONArray(reactie);
+//
+//                Log.v("wiebe", "wiebe"+reactieArray);
+//            }
+//            catch (JSONException e)
+//            {
+//                e.printStackTrace();
+//                Log.v("wiebe", "wiebe"+reactieArray);
+//
+//            }
+
+        }
 
     }
 }
+//            Voor elke service ontvangen 1 opslaan
+//
+//            for(String test : reactie ){
+//
+//
+//            }
+//String reactieFormat = reactie.replace("null", "{\n" +
+//        "    \"Array\": ");
+//reactieFormat = reactieFormat + "}";
+//                JSONObject xxx = new JSONObject(reactieFormat);
+//                JSONArray test = xxx.getJSONArray("Array");
+//                try {
+//                    Log.v("reactie",""+reactieFormat);
+//                     test = new JSONArray(reactieFormat);
+//                    Log.v("ja",""+test);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    for (int x = 0; x < test.length(); x++){
+//JSONObject naamobject = (JSONObject) test.get(x);
+//                        String naam = naamobject.getString("naam");
+//                        Log.v("TESTERSENS", "" + naam);
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
