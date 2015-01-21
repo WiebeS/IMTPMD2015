@@ -8,6 +8,14 @@
     <string name="busName">MarioCo</string>
     <string name="businessInfo">MarioCo loodgieters, voor al uw loodgieters werk en meer!! Selecteer onderin een van onze services!!!</string>
     <string name="LoginText">Vul hier uw IP in:</string>
+    <string name="Gadoor">Ga door om de service aan te vragen-></string>
+    <string name="VoorIn">Voer hier uw gegevens in voor de aanvraag:</string>
+
+    <string name="Naam">Naam:</string>
+    <string name="Adres">Adres:</string>
+    <string name="Tel">Tel:</string>
+    <string name="Email">E-mail:</string>
+
 
 
 </resources>

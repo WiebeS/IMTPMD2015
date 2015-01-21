@@ -26,6 +26,11 @@
             android:name=".ServiceActivity"
             android:label="@string/app_name" >
         </activity>
+
+        <activity
+            android:name=".AanvraagActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
