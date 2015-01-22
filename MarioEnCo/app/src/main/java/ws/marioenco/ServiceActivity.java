@@ -31,11 +31,10 @@ public class ServiceActivity extends Activity  {
     // public String ipAdress = "192.168.56.1";
     TextView serviceTag,serviceInfo;
 
-
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
-
     InformatieServiceModel informatieServiceModel = InformatieServiceModel.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +44,18 @@ public class ServiceActivity extends Activity  {
         serviceInfo = (TextView) findViewById(R.id.servicesInfoLong);
 
 //// TODO data gesaved ophalen
-//            list.add("Riolering1");
-//            list.add("Lekkage1");
-//            list.add("Prinses in nood1");
 
         if(settingsData.getisOnline() == true){
             getServicesInfoLong();
-            serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
+        }
+        else{
+            informatieServiceModel.setInfoServiceHardCoded(serviceLijstModel.getSelectedService());
         }
 
+        serviceInfo.setText(informatieServiceModel.getinfoService());
+        serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
 
         // TODO OFFLINE
-
 
     }
 
@@ -113,7 +112,6 @@ public class ServiceActivity extends Activity  {
                 String infoString = info.getString("informatie");
 
                 informatieServiceModel.setinfoService(infoString);
-                serviceInfo.setText(informatieServiceModel.getinfoService());
 
             } catch (JSONException e) {
                 e.printStackTrace();

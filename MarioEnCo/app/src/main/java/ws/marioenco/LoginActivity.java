@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ws.marioenco.Helpers.ClientHelper;
+import ws.marioenco.Models.InformatieServiceModel;
 import ws.marioenco.Models.ServiceLijstModel;
 import ws.marioenco.Models.Settings;
 
@@ -58,6 +59,7 @@ public class LoginActivity extends Activity {
             if(connectionAvailable == false){
            //     setServicesHardCoded();
                 serviceLijstModel.setServiceHardCoded();
+
                 noConnectionMessage();
             }
 

@@ -44,8 +44,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     InformatieServiceBeknoptModel informatieServiceBeknoptModel = InformatieServiceBeknoptModel.getInstance();
 
     SharedPreferences sharedpreferences;
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    public static final String Pos = "posKeyy";
+    public static final String MyPREFERENCES = "MyPrefsss" ;
+    public static final String Pos = "posKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +66,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
         // TODO OFFLINE
 
-  //      if (settingsData.getisOnline() == true){
-            list = serviceLijstModel.getServicesLijst();
-   //     }
+        //      if (settingsData.getisOnline() == true){
+  //      list = serviceLijstModel.getServicesLijst();
+        //     }
 //        else if (settingsData.getisOnline() == false) {
 //            // TODO data gesaved ophalen
 //            list.add("Riolering1");
@@ -115,37 +115,49 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
+    //    int savedPosition = sharedpreferences.getInt(Pos,0);
+
 // Functie wordt automatisch 1 keer aangeroepen bij eht starten van de activity, vandaar de eerste keer afvangen en de sharedpref laden
         if (i<1){
             i++;
-                int savedPosition = sharedpreferences.getInt(Pos,0);
-                setSelectedServices(savedPosition);
-
-                spinner1.setSelection(savedPosition);
-
+      //      spinner1.setSelection(savedPosition);
+      //      pos = savedPosition;
         }
         // Gebeurd na de eerste keer laden
         else{
-            setSelectedServices(pos);
-
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putInt(Pos,pos);
-
-            editor.commit();
-            Log.v("Wiebe", "gergwe"+i);
+//            setSelectedServices(pos);
+//
+//            SharedPreferences.Editor editor = sharedpreferences.edit();
+//            editor.putInt(Pos,pos);
+//            editor.commit();
         }
- }
 
-    public void setSelectedServices(int pos){
+        serviceLijstModel.setSelectedService(pos);
+        setSelectedServices();
+
+//   Log.v("Wiebe", "Online offline: "+ settingsData.getisOnline() + "savedPos " + savedPosition + "positielijst " + serviceLijstModel.getSelectedService() + "tag "+ informatieServiceBeknoptModel.getShortInfoService());
+
+        Log.v("wiebe", String.valueOf(pos));
+    }
+
+    public void setSelectedServices(){
 
         if (settingsData.getisOnline() == true) {
             // Ophalen van de beknopte informatie
             getServicesInfoShort();
-           }
-            // Het saven van de geselecteerde service
-            serviceLijstModel.setSelectedService(pos);
-            // Vullen van textveld welke een kopje is van de beknopte beschrijving
-            serviceTag.setText(serviceLijstModel.getServicesLijst().get(pos));
+        }
+        else{
+            informatieServiceBeknoptModel.setShortInfoServiceHardCoded(serviceLijstModel.getSelectedService());
+        }
+//        // Het saven van de geselecteerde service
+//        serviceLijstModel.setSelectedService(pos);
+
+
+        // Vullen van textveld welke een kopje is van de beknopte beschrijving
+        serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
+
+
+        serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
     }
 
     @Override
@@ -176,17 +188,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
                 e.printStackTrace();
             }
 
-            // TODO De reactie doorloopen, en weer een JSON van bouwen?!
-
-
             try {
                 JSONObject shortInfo = new JSONObject(reactie);
 
                 String shortInfoString = shortInfo.getString("informatiebeknopt");
 
                 informatieServiceBeknoptModel.setShortInfoService(shortInfoString);
-
-                serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
 
             } catch (JSONException e) {
                 e.printStackTrace();

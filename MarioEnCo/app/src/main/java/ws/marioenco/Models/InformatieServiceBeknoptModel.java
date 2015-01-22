@@ -26,7 +26,17 @@ public class InformatieServiceBeknoptModel {
         this.shortInfoService = shortInfoService;
     }
 
+    public void setShortInfoServiceHardCoded(int pos){
 
-
-
+        // set info service adv de pos
+        if(pos == 0){
+            this.shortInfoService ="Uw toiletproblemen in mum van tijd verholpen!";
+        }
+        if(pos == 1) {
+        }
+        this.shortInfoService = "Valt alles in het water? Wij helpen u uit de brand!";
+        if(pos == 2) {
+            this.shortInfoService = "Wij vinden het juiste kasteel voor u!";
+        }
+    }
 }
