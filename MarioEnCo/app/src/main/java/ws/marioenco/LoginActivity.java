@@ -167,7 +167,6 @@ public class LoginActivity extends Activity {
         Log.v("wiebe", String.valueOf(settingsData.getisOnline()));
 
         return settingsData.getisOnline();
-
     }
 
 
@@ -176,7 +175,6 @@ public class LoginActivity extends Activity {
         Toast.makeText(this, R.string.errorConnection,
                 Toast.LENGTH_LONG).show();
     }
-
 
     public void connectionMessage(){
 
