@@ -3,6 +3,7 @@ package ws.marioenco.Helpers;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,6 +17,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import ws.marioenco.MainActivity;
+import ws.marioenco.Models.Settings;
+import ws.marioenco.R;
+
 /**
  * Created by Wiebe on 1/19/2015.
  */
@@ -28,8 +33,9 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
     private int port;
     private Context context;
 
+    Settings settingsData = Settings.getInstance();
 
-    public ClientHelper(Context context, String ip, int port, String message  )
+    public ClientHelper(Context context, String ip, int port, String message )
     {
         // Variabelen welke de communicator nodig heeft.
 
@@ -87,7 +93,7 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
 
                 StringBuilder stringBouwer = new StringBuilder();
 
-// TODO   hier nalopen waarom de NULL er niet uitgefulterd wordt
+            // TODO   hier nalopen waarom de NULL er niet uitgefulterd wordt
                 // Er is nu de I ingevoegd zodat er pas 1 x draaien een string wordt toegevoegd
 
                 int i =0;
@@ -102,11 +108,7 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
                     }
                     else{
                         stringBouwer.append(line);
-                        Log.v("fixen-->",line+i);
-
                     }
-
-
                     i++;
 
 
@@ -123,20 +125,27 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
 
         catch( UnknownHostException e )
         {
-            Log.d("debug", "can't find host");
+            Log.v("debug", "can't find host");
+            settingsData.setOnline(false);
+
+            // TODO hier de offline modus maken
+
         }
 
         catch( SocketTimeoutException e )
         {
-            Log.d("debug", "time-out");
+             Log.v("debug", "time-out");
+            settingsData.setOnline(false);
         }
 
         catch (IOException e)
         {
             e.printStackTrace();
-        }
+            settingsData.setOnline(false);
+         }
 
         return reactie;
     }
+
 
 }

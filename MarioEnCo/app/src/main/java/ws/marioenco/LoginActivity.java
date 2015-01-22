@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,14 +50,32 @@ public class LoginActivity extends Activity {
         String ip= String.valueOf(ipEdit.getText());
         settingsData.setIp4Adress(ip);
 
-          if (settingsData.getisOnline() == true){
-          getServices();
+        if (settingsData.getisOnline() == true){
+          //  getServices();
+
+            boolean connectionAvailable = getOnlineOffline();
+            if(connectionAvailable == false){
+                noConnectionMessage();
+            }
+
+            else if (connectionAvailable == true){
+                getServices();
+
+                connectionMessage();
+
+            }
+
+            // TODO get SERVICES aanroepen
         }
+
+
+
+        // TODO OFFLINE
         // Load next page
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-     }
+    }
 
     public void getServices() {
         //aanmaken van een nieuw jsonobject
@@ -80,11 +99,7 @@ public class LoginActivity extends Activity {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-            //        reactie = new ClientHelper( this, ipAdress, 4444,"informatie").execute().get();
 
-            // TODO De reactie doorloopen, en weer een JSON van bouwen?!
-
-            Log.v("wiebe", reactie);
 
             JSONArray services = null;
             try {
@@ -122,4 +137,55 @@ public class LoginActivity extends Activity {
 
     }
 
+    public boolean getOnlineOffline() {
+        //aanmaken van een nieuw jsonobject
+        JSONObject serviceObject = new JSONObject();
+
+        try {
+            //verzenden van het jsonobject
+            serviceObject.put("servicelijst","");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        {
+            //servercommunicator proberen te verbinden met de server
+            try {
+                String reactie;
+                reactie = new ClientHelper(this, settingsData.getIp4Adress(), 4444, serviceObject.toString()).execute().get();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+
+            }
+
+        }
+        // TODO hierb ezig
+
+        Log.v("wiebe", String.valueOf(settingsData.getisOnline()));
+
+        return settingsData.getisOnline();
+
+    }
+
+
+    public void noConnectionMessage(){
+
+        Toast.makeText(this, R.string.errorConnection,
+                Toast.LENGTH_LONG).show();
+    }
+
+
+    public void connectionMessage(){
+
+        Toast.makeText(this, R.string.connection,
+                Toast.LENGTH_LONG).show();
+    }
+
 }
+
+

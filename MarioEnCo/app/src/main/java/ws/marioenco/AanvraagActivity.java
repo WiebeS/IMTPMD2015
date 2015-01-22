@@ -46,9 +46,14 @@ public class AanvraagActivity extends Activity  {
         tel = (EditText) findViewById(R.id.telEdit);
         mail = (EditText) findViewById(R.id.mailEdit);
 
-        serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
-        // Tonen van beknopte info
-        serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
+        if (settingsData.getisOnline() == true){
+            serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
+            // Tonen van beknopte info
+            serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
+        }
+
+        // TODO OFFLINE
+
     }
 
     @Override
@@ -134,7 +139,7 @@ public class AanvraagActivity extends Activity  {
         }
 
         else{
-            Toast.makeText(this,"Geen aanvraag mogelijk ivm connectie",
+            Toast.makeText(this,R.string.errorConnectionAanvraag,
                     Toast.LENGTH_SHORT).show();
         }
 
@@ -207,7 +212,6 @@ public class AanvraagActivity extends Activity  {
     public void aanvraagVoltooid(String string){
         Toast.makeText(this,string,
                 Toast.LENGTH_LONG).show();
-
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

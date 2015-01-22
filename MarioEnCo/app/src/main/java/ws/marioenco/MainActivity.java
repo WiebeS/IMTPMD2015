@@ -57,6 +57,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 // Inladen van de service Lijst
         List<String> list = new ArrayList<String>();
 
+        // TODO OFFLINE
+        // TODO ON BACK PRESSED?
+
+
         if (settingsData.getisOnline() == true){
              list = serviceLijstModel.getServicesLijst();
         }
@@ -111,19 +115,17 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-//        Toast.makeText(parent.getContext(),
-//                "On Item Select : \n" + parent.getItemAtPosition(pos).toString(),
-//                Toast.LENGTH_LONG).show();
+        if (settingsData.getisOnline() == true){
 
-        // Het saven van de geselecteerde service
-        serviceLijstModel.setSelectedService(pos);
-        // Vullen van textveld welke een kopje is van de beknopte beschrijving
-        serviceTag.setText(serviceLijstModel.getServicesLijst().get(pos));
+            // Het saven van de geselecteerde service
+            serviceLijstModel.setSelectedService(pos);
+            // Vullen van textveld welke een kopje is van de beknopte beschrijving
+            serviceTag.setText(serviceLijstModel.getServicesLijst().get(pos));
 
-        // Ophalen van de beknopte informatie
-        getServicesInfoShort();
+            // Ophalen van de beknopte informatie
+            getServicesInfoShort();
+        }
 
-        Log.v("wiebe","HIER?");
     }
 
     @Override

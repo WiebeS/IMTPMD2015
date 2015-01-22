@@ -16,6 +16,10 @@
     <string name="Tel">Tel:</string>
     <string name="Email">E-mail:</string>
 
+    <string name="errorConnection">Er is geen verbinding mogelijk, u gaat door in de Offline modus!</string>
+    <string name="errorConnectionAanvraag">"Geen aanvraag mogelijk ivm connectie problemen"</string>
+    <string name="connection">"Verbinding met de server geslaagd, welkom!"</string>
+
 
 
 </resources>

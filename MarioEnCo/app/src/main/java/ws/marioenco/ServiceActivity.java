@@ -49,10 +49,16 @@ public class ServiceActivity extends Activity  {
 //            list.add("Lekkage1");
 //            list.add("Prinses in nood1");
 
-        getServicesInfoLong();
-
-        serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
+        if(settingsData.getisOnline() == true){
+            getServicesInfoLong();
+            serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
         }
+
+
+        // TODO OFFLINE
+
+
+    }
 
 
     @Override
