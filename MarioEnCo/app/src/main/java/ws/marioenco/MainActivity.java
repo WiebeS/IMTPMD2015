@@ -62,10 +62,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
 
         if (settingsData.getisOnline() == true){
-             list = serviceLijstModel.getServicesLijst();
+            list = serviceLijstModel.getServicesLijst();
         }
         else if (settingsData.getisOnline() == false) {
-        // TODO data gesaved ophalen
+            // TODO data gesaved ophalen
             list.add("Riolering1");
             list.add("Lekkage1");
             list.add("Prinses in nood1");
@@ -85,10 +85,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         // TODO filteren van connectie
 // Alleen uitvoeren als de app connectie met de server heeft
 
-}
+    }
     // Add spinner data
     public void addListenerOnSpinnerItemSelection() {
-    spinner1.setOnItemSelectedListener(this);
+        spinner1.setOnItemSelectedListener(this);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
     }
 
-// Functie om de beknopte informatie op te halen en het model te vullen
+    // Functie om de beknopte informatie op te halen en het model te vullen
     public void getServicesInfoShort() {
         //aanmaken van een nieuw jsonobject
         JSONObject infoObject = new JSONObject();
@@ -167,52 +167,19 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
                 String shortInfoString = shortInfo.getString("informatiebeknopt");
 
                 informatieServiceBeknoptModel.setShortInfoService(shortInfoString);
-            //    Log.v("wiebe", test);
+                //    Log.v("wiebe", test);
 
                 serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-//            JSONArray services = null;
-//            try {
-//                services = new JSONArray(reactie);
-//
-//                //  String test = String.valueOf(services.get("naam"));
-//
-//                Log.v("wiebe", "JA" );
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//            for (int i = 0 ; i < services.length(); i++)
-//            {
-//                ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
-//
-//                //     ArrayList<String> servicesLijst = new ArrayList<String>();
-//
-//                try {
-//                    JSONObject value = services.getJSONObject(i);
-//
-//                    String valueString = value.getString("naam");
-//
-//                    Log.v("wiebe", "JA" + i + valueString);
-//
-//                    serviceLijstModel.addService(valueString);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
         }
 
     }
 
 
-// functie om met de button verder te gaan naar de volgende pagina.
+    // functie om met de button verder te gaan naar de volgende pagina.
     public void goToServicePage(View view){
 
         // Load next page
@@ -222,34 +189,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     }
 
 
-}
+    @Override
+    public void onBackPressed() {
+        // Load next page
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-//            Voor elke service ontvangen 1 opslaan
-//
-//            for(String test : reactie ){
-//
-//
-//            }
-//String reactieFormat = reactie.replace("null", "{\n" +
-//        "    \"Array\": ");
-//reactieFormat = reactieFormat + "}";
-//                JSONObject xxx = new JSONObject(reactieFormat);
-//                JSONArray test = xxx.getJSONArray("Array");
-//                try {
-//                    Log.v("reactie",""+reactieFormat);
-//                     test = new JSONArray(reactieFormat);
-//                    Log.v("ja",""+test);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    for (int x = 0; x < test.length(); x++){
-//JSONObject naamobject = (JSONObject) test.get(x);
-//                        String naam = naamobject.getString("naam");
-//                        Log.v("TESTERSENS", "" + naam);
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
+}

@@ -25,7 +25,6 @@ import ws.marioenco.Models.Settings;
  */
 public class LoginActivity extends Activity {
 
-
     EditText ipEdit;
     TextView textViewIP;
     Button loginButton;
@@ -51,7 +50,7 @@ public class LoginActivity extends Activity {
         settingsData.setIp4Adress(ip);
 
         if (settingsData.getisOnline() == true){
-          //  getServices();
+            //  getServices();
 
             boolean connectionAvailable = getOnlineOffline();
             if(connectionAvailable == false){
@@ -62,7 +61,6 @@ public class LoginActivity extends Activity {
                 getServices();
 
                 connectionMessage();
-
             }
 
             // TODO get SERVICES aanroepen

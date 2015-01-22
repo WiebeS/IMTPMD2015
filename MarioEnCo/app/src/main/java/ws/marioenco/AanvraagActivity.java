@@ -130,7 +130,7 @@ public class AanvraagActivity extends Activity  {
     // functie om met de button verder te gaan naar de volgende pagina.
     public void aanvraag(View view){
 
-   //     Log.v("wiebe", String.valueOf(getUserGegevens()));
+        //     Log.v("wiebe", String.valueOf(getUserGegevens()));
 
         if (settingsData.getisOnline() == true && getUserGegevens() == true)
         {
@@ -143,13 +143,6 @@ public class AanvraagActivity extends Activity  {
                     Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    // functie om met de button verder te gaan naar de vorige pagina.
-    public void prevPage(View view){
-        Intent intent = new Intent(this, ServiceActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 // TODO HIER BEZIG
@@ -170,7 +163,7 @@ public class AanvraagActivity extends Activity  {
         koperInfoArray.put(serviceNameObject);
 
 
-   // Voeg de naam toe
+        // Voeg de naam toe
         JSONObject koperObject = new JSONObject();
         try {
             koperObject.put("kopernaam",userGegevensModel.getUserNaam());
@@ -216,7 +209,22 @@ public class AanvraagActivity extends Activity  {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-
-
     }
+
+
+    // functie om met de button verder te gaan naar de vorige pagina.
+    public void prevPage(View view){
+        Intent intent = new Intent(this, ServiceActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Load prev page
+        Intent intent = new Intent(this, ServiceActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

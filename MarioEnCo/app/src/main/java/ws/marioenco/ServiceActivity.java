@@ -41,8 +41,8 @@ public class ServiceActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
 
-          serviceTag = (TextView) findViewById(R.id.serviceTextViewService);
-          serviceInfo = (TextView) findViewById(R.id.servicesInfoLong);
+        serviceTag = (TextView) findViewById(R.id.serviceTextViewService);
+        serviceInfo = (TextView) findViewById(R.id.servicesInfoLong);
 
 //// TODO data gesaved ophalen
 //            list.add("Riolering1");
@@ -83,7 +83,7 @@ public class ServiceActivity extends Activity  {
         return super.onOptionsItemSelected(item);
     }
 
-// Functie om de  informatie op te halen en het model te vullen
+    // Functie om de  informatie op te halen en het model te vullen
     public void getServicesInfoLong() {
         //aanmaken van een nieuw jsonobject
         JSONObject infoObject = new JSONObject();
@@ -122,7 +122,7 @@ public class ServiceActivity extends Activity  {
         }
     }
 
-// functie om met de button verder te gaan naar de volgende pagina.
+    // functie om met de button verder te gaan naar de volgende pagina.
     public void nextPage(View view){
 
         Intent intent = new Intent(this, AanvraagActivity.class);
@@ -132,6 +132,14 @@ public class ServiceActivity extends Activity  {
 
     // functie om met de button verder te gaan naar de vorige pagina.
     public void prevPage(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Load prev page
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
