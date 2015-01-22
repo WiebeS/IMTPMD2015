@@ -46,13 +46,9 @@ public class AanvraagActivity extends Activity  {
         tel = (EditText) findViewById(R.id.telEdit);
         mail = (EditText) findViewById(R.id.mailEdit);
 
-        if (settingsData.getisOnline() == true){
-            serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
-            // Tonen van beknopte info
-            serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
-        }
-
-        // TODO OFFLINE
+        serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
+        // Tonen van beknopte info
+        serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
 
     }
 

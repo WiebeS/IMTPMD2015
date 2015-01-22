@@ -49,16 +49,20 @@ public class ServiceActivity extends Activity  {
             getServicesInfoLong();
         }
         else{
-            informatieServiceModel.setInfoServiceHardCoded(serviceLijstModel.getSelectedService());
+            //    informatieServiceModel.setInfoServiceHardCoded(serviceLijstModel.getSelectedService());
+
+            // Hardcoded  info array
+            String hardCoded[] = new String[3];
+            hardCoded[0] ="Iedereen vindt het niets meer dan normaal dat als u de WC doorspoelt het water netjes het riool instroomt. Maar wat als dit nu eens niet gebeurt? U spoelt het toilet door maar het water komt omhoog in de WC pot of het water blijft staan? Neem ook hiervoor met spoed contact op met onze loodgieters!";
+            hardCoded[1] = "Reparatie nodig aan uw dak? Veelal hoeft het dak niet te worden vervangen maar kan deze gewoon nog worden gerepareerd. In sommige gevallen is het echter goedkoper om het geheel te vervangen. In beide situaties brengen we graag advies en een vrijblijvende offerte uit." ;
+            hardCoded[2] = "Is uw prinses gevangen genomen door een plaag Goombas? Kunt u maar niet het juiste kasteel vinden? Wij zijn gespecialiseerd in het vinden van gevangen genomen prinsessen. Dankzij onze uitgebreide ervaring van het riolering netwerk kunnen wij snel ter plaatse zijn.";
+
+            informatieServiceModel.setInfoServiceHardCoded(hardCoded[serviceLijstModel.getSelectedService()]);
         }
 
         serviceInfo.setText(informatieServiceModel.getinfoService());
         serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
-
-        // TODO OFFLINE
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
