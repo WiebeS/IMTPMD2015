@@ -113,7 +113,6 @@ public class ServiceActivity extends Activity  {
                 String infoString = info.getString("informatie");
 
                 informatieServiceModel.setinfoService(infoString);
-
                 serviceInfo.setText(informatieServiceModel.getinfoService());
 
             } catch (JSONException e) {

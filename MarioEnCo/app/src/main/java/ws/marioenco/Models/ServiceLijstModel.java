@@ -33,6 +33,15 @@ public class ServiceLijstModel {
         servicesLijst.add(string);
     }
 
+    public void clearService(){
+        servicesLijst.clear();
+    }
+
+    public void setServiceHardCoded(){
+        servicesLijst.clear();
+        servicesLijst.add("Riolering");
+        servicesLijst.add("Dak Lekkage");
+        servicesLijst.add("Prinses In Nood");    }
 
     public int getSelectedService() {
         return selectedService;

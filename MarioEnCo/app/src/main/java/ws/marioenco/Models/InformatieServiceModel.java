@@ -23,4 +23,10 @@ public class InformatieServiceModel {
     public void setinfoService(String infoService) {
         this.infoService = infoService;
     }
+
+    public void setInfoServiceHardCoded(int pos){
+
+
+
+    }
 }

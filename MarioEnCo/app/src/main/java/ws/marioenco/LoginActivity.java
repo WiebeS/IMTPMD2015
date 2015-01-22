@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import ws.marioenco.Helpers.ClientHelper;
@@ -30,6 +31,7 @@ public class LoginActivity extends Activity {
     Button loginButton;
 
     Settings settingsData = Settings.getInstance();
+    ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,30 +45,30 @@ public class LoginActivity extends Activity {
         ipEdit.setText(settingsData.getIp4Adress());
     }
 
-
     public void login(View view){
 
         String ip= String.valueOf(ipEdit.getText());
         settingsData.setIp4Adress(ip);
 
-        if (settingsData.getisOnline() == true){
-            //  getServices();
+//        if (settingsData.getisOnline() == true){
+//            //  getServices();
+        settingsData.setOnline(true);
 
             boolean connectionAvailable = getOnlineOffline();
             if(connectionAvailable == false){
+           //     setServicesHardCoded();
+                serviceLijstModel.setServiceHardCoded();
                 noConnectionMessage();
             }
 
             else if (connectionAvailable == true){
-                getServices();
 
+                getServices();
                 connectionMessage();
             }
 
             // TODO get SERVICES aanroepen
-        }
-
-
+//        }
 
         // TODO OFFLINE
         // Load next page
@@ -111,20 +113,14 @@ public class LoginActivity extends Activity {
                 e.printStackTrace();
             }
 
+            serviceLijstModel.clearService();
 
             for (int i = 0 ; i < services.length(); i++)
             {
-                ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
-
-                //     ArrayList<String> servicesLijst = new ArrayList<String>();
-
                 try {
                     JSONObject value = services.getJSONObject(i);
 
                     String valueString = value.getString("naam");
-
-                    Log.v("wiebe", "JA" + i + valueString);
-
                     serviceLijstModel.addService(valueString);
 
                 } catch (JSONException e) {
@@ -169,7 +165,6 @@ public class LoginActivity extends Activity {
         return settingsData.getisOnline();
     }
 
-
     public void noConnectionMessage(){
 
         Toast.makeText(this, R.string.errorConnection,
@@ -181,6 +176,17 @@ public class LoginActivity extends Activity {
         Toast.makeText(this, R.string.connection,
                 Toast.LENGTH_LONG).show();
     }
+
+   public void setServicesHardCoded(){
+
+       ArrayList<String> services = new ArrayList<String>();
+       services.add("Riolering");
+       services.add("Dak Lekkage");
+       services.add("Prinses In Nood");
+
+       serviceLijstModel.clearService();
+       serviceLijstModel.setServicesLijst(services);
+   }
 
 }
 

@@ -3,6 +3,7 @@ package ws.marioenco;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -42,6 +43,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
     InformatieServiceBeknoptModel informatieServiceBeknoptModel = InformatieServiceBeknoptModel.getInstance();
 
+    SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String Pos = "posKeyy";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,37 +59,31 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         nextButton = (Button) findViewById(R.id.nextButton);
         spinner1 = (Spinner) findViewById(R.id.spinner);
 
-// Inladen van de service Lijst
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        // Inladen van de service Lijst
         List<String> list = new ArrayList<String>();
 
         // TODO OFFLINE
-        // TODO ON BACK PRESSED?
 
-
-        if (settingsData.getisOnline() == true){
+  //      if (settingsData.getisOnline() == true){
             list = serviceLijstModel.getServicesLijst();
-        }
-        else if (settingsData.getisOnline() == false) {
-            // TODO data gesaved ophalen
-            list.add("Riolering1");
-            list.add("Lekkage1");
-            list.add("Prinses in nood1");
-        }
+   //     }
+//        else if (settingsData.getisOnline() == false) {
+//            // TODO data gesaved ophalen
+//            list.add("Riolering1");
+//            list.add("Lekkage1");
+//            list.add("Prinses in nood1");
+//        }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (this, R.layout.spinneritem, list);
 
         dataAdapter.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
-
         spinner1.setAdapter(dataAdapter);
-
         // Spinner item selection Listener
         addListenerOnSpinnerItemSelection();
-
-        // TODO filteren van connectie
-// Alleen uitvoeren als de app connectie met de server heeft
-
     }
     // Add spinner data
     public void addListenerOnSpinnerItemSelection() {
@@ -112,25 +111,45 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         return super.onOptionsItemSelected(item);
     }
 
+    int i =0;
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-        if (settingsData.getisOnline() == true){
+// Functie wordt automatisch 1 keer aangeroepen bij eht starten van de activity, vandaar de eerste keer afvangen en de sharedpref laden
+        if (i<1){
+            i++;
+                int savedPosition = sharedpreferences.getInt(Pos,0);
+                setSelectedServices(savedPosition);
 
+                spinner1.setSelection(savedPosition);
+
+        }
+        // Gebeurd na de eerste keer laden
+        else{
+            setSelectedServices(pos);
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(Pos,pos);
+
+            editor.commit();
+            Log.v("Wiebe", "gergwe"+i);
+        }
+ }
+
+    public void setSelectedServices(int pos){
+
+        if (settingsData.getisOnline() == true) {
+            // Ophalen van de beknopte informatie
+            getServicesInfoShort();
+           }
             // Het saven van de geselecteerde service
             serviceLijstModel.setSelectedService(pos);
             // Vullen van textveld welke een kopje is van de beknopte beschrijving
             serviceTag.setText(serviceLijstModel.getServicesLijst().get(pos));
-
-            // Ophalen van de beknopte informatie
-            getServicesInfoShort();
-        }
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     // Functie om de beknopte informatie op te halen en het model te vullen
@@ -156,7 +175,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-            //        reactie = new ClientHelper( this, ipAdress, 4444,"informatie").execute().get();
 
             // TODO De reactie doorloopen, en weer een JSON van bouwen?!
 
@@ -167,7 +185,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
                 String shortInfoString = shortInfo.getString("informatiebeknopt");
 
                 informatieServiceBeknoptModel.setShortInfoService(shortInfoString);
-                //    Log.v("wiebe", test);
 
                 serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
 
@@ -178,7 +195,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
     }
 
-
     // functie om met de button verder te gaan naar de volgende pagina.
     public void goToServicePage(View view){
 
@@ -187,7 +203,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         startActivity(intent);
         finish();
     }
-
 
     @Override
     public void onBackPressed() {

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">MarioEnCo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="busName">MarioCo</string>
-    <string name="businessInfo">MarioCo loodgieters, voor al uw loodgieters werk en meer!! Selecteer onderin een van onze services!!!</string>
+    <string name="businessInfo">MarioCo loodgieters, voor al uw loodgieters werk en meer! Selecteer onderin een van onze services!</string>
     <string name="LoginText">Vul hier uw IP in:</string>
-    <string name="Gadoor">Ga door om de service aan te vragen-></string>
+    <string name="Gadoor">Ga door om de service aan te vragen</string>
     <string name="VoorIn">Voer hier uw gegevens in voor de aanvraag:</string>
 
     <string name="Naam">Naam:</string>
@@ -19,7 +18,4 @@
     <string name="errorConnection">Er is geen verbinding mogelijk, u gaat door in de Offline modus!</string>
     <string name="errorConnectionAanvraag">"Geen aanvraag mogelijk ivm connectie problemen"</string>
     <string name="connection">"Verbinding met de server geslaagd, welkom!"</string>
-
-
-
 </resources>
