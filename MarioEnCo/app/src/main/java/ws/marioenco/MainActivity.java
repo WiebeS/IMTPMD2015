@@ -62,12 +62,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         // Inladen van de service Lijst
-        List<String> list = new ArrayList<String>();
+       ArrayList<String> list;
 
         // TODO OFFLINE
 
         //      if (settingsData.getisOnline() == true){
-  //      list = serviceLijstModel.getServicesLijst();
+        list = serviceLijstModel.getServicesLijst();
         //     }
 //        else if (settingsData.getisOnline() == false) {
 //            // TODO data gesaved ophalen
@@ -115,29 +115,28 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-    //    int savedPosition = sharedpreferences.getInt(Pos,0);
+         int savedPosition = sharedpreferences.getInt(Pos,0);
 
 // Functie wordt automatisch 1 keer aangeroepen bij eht starten van de activity, vandaar de eerste keer afvangen en de sharedpref laden
         if (i<1){
             i++;
-      //      spinner1.setSelection(savedPosition);
-      //      pos = savedPosition;
+            spinner1.setSelection(savedPosition);
+            pos = savedPosition;
         }
         // Gebeurd na de eerste keer laden
         else{
-//            setSelectedServices(pos);
-//
-//            SharedPreferences.Editor editor = sharedpreferences.edit();
-//            editor.putInt(Pos,pos);
-//            editor.commit();
+            setSelectedServices();
+
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(Pos,pos);
+            editor.commit();
         }
 
         serviceLijstModel.setSelectedService(pos);
         setSelectedServices();
 
-//   Log.v("Wiebe", "Online offline: "+ settingsData.getisOnline() + "savedPos " + savedPosition + "positielijst " + serviceLijstModel.getSelectedService() + "tag "+ informatieServiceBeknoptModel.getShortInfoService());
+    //    Log.v("Wiebe", "Online offline: "+ settingsData.getisOnline() + "savedPos " + savedPosition + "positielijst " + serviceLijstModel.getSelectedService() + "tag "+ informatieServiceBeknoptModel.getShortInfoService());
 
-        Log.v("wiebe", String.valueOf(pos));
     }
 
     public void setSelectedServices(){
@@ -147,16 +146,19 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
             getServicesInfoShort();
         }
         else{
-            informatieServiceBeknoptModel.setShortInfoServiceHardCoded(serviceLijstModel.getSelectedService());
+// Hardcoded short info array
+            String hardCoded[] = new String[3];
+            hardCoded[0] = "Uw toiletproblemen in mum van tijd verholpen!";
+            hardCoded[1] = "Valt alles in het water? Wij helpen u uit de brand!";
+            hardCoded[2] = "Wij vinden het juiste kasteel voor u!";
+
+            informatieServiceBeknoptModel.setShortInfoServiceHardCoded(hardCoded[serviceLijstModel.getSelectedService()]);
         }
 //        // Het saven van de geselecteerde service
-//        serviceLijstModel.setSelectedService(pos);
-
+     //   serviceLijstModel.setSelectedService(pos);
 
         // Vullen van textveld welke een kopje is van de beknopte beschrijving
         serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
-
-
         serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
     }
 

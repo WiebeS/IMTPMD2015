@@ -19,7 +19,7 @@ public class ServiceLijstModel {
 
     private ArrayList<String> servicesLijst = new ArrayList<String>();
 
-    private int selectedService = 0;
+    private int selectedService;
 
     public void setServicesLijst(ArrayList<String> servicesLijst) {
         this.servicesLijst = servicesLijst;

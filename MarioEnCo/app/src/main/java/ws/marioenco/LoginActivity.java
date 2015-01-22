@@ -69,7 +69,6 @@ public class LoginActivity extends Activity {
                 connectionMessage();
             }
 
-            // TODO get SERVICES aanroepen
 //        }
 
         // TODO OFFLINE

@@ -142,7 +142,6 @@ public class AanvraagActivity extends Activity  {
             Toast.makeText(this,R.string.errorConnectionAanvraag,
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 
 // TODO HIER BEZIG
