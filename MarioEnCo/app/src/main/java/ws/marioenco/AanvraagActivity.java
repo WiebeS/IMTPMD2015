@@ -1,10 +1,12 @@
 package ws.marioenco;
-
+/**
+ * Created by Wiebe Steverink on 1/19/2015.
+ * IMTPMD HSLEIDEN
+ */
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,12 +28,13 @@ import ws.marioenco.Models.UserGegevensModel;
 
 public class AanvraagActivity extends Activity  {
 
+    // Vars
     TextView serviceTag,serviceInfo;
     EditText naam,adres,tel,mail;
     Button backButton;
-
-    Typeface customFont,fontAwesome;
-
+    // Font awesome
+    Typeface fontAwesome;
+    // Get instances van de models
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
     InformatieServiceModel informatieServiceModel = InformatieServiceModel.getInstance();
@@ -43,6 +46,7 @@ public class AanvraagActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aanvraag);
 
+        // setup
         fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome.ttf");
 
         serviceTag = (TextView) findViewById(R.id.serviceTextViewServiceAanvraag);
@@ -52,15 +56,14 @@ public class AanvraagActivity extends Activity  {
         adres = (EditText) findViewById(R.id.adresEdit);
         tel = (EditText) findViewById(R.id.telEdit);
         mail = (EditText) findViewById(R.id.mailEdit);
-
+        // set font awesome
         backButton = (Button) findViewById(R.id.backButtonAanvraag);
         backButton.setTypeface(fontAwesome);
         backButton.setText(R.string.fa_left);
-
+        // Toon geselecteerde service
         serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
         // Tonen van beknopte info
         serviceInfo.setText(informatieServiceBeknoptModel.getShortInfoService());
-
     }
 
     @Override
@@ -85,7 +88,7 @@ public class AanvraagActivity extends Activity  {
         return super.onOptionsItemSelected(item);
     }
 
-    // Get user gegevens uit de textfields
+    // Get user gegevens uit de textfields met minimaal 3 karakter per veld
     public boolean getUserGegevens()
     {
         boolean compleet = true;
@@ -134,32 +137,29 @@ public class AanvraagActivity extends Activity  {
         return compleet;
     }
 
-    // functie om met de button verder te gaan naar de volgende pagina.
+    // functie om met de button verder te gaan naar de volgende pagina en om de aanvraag naar server te verzenden mits er een connectie is
     public void aanvraag(View view){
 
-        //     Log.v("wiebe", String.valueOf(getUserGegevens()));
 
         if (settingsData.getisOnline() == true && getUserGegevens() == true)
         {
             // Verzend de aanvraag
             getAanvraag();
         }
-
+        // melding connectie probleem
         else{
             Toast.makeText(this,R.string.errorConnectionAanvraag,
                     Toast.LENGTH_SHORT).show();
         }
     }
 
-// TODO HIER BEZIG
-
     // Functie om de aanvraag te verwerken
     public void getAanvraag() {
         //aanmaken van een nieuw jsonobject
         JSONObject sendObject = new JSONObject();
-// Opbouwen van de te verzenden json array
+        // Opbouwen van de te verzenden json array
         JSONArray koperInfoArray = new JSONArray();
-// Voeg de service naam toe
+        // Voeg de service naam toe
         JSONObject serviceNameObject = new JSONObject();
         try {
             serviceNameObject.put("servicenaam",serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
@@ -168,8 +168,7 @@ public class AanvraagActivity extends Activity  {
         }
         koperInfoArray.put(serviceNameObject);
 
-
-        // Voeg de naam toe
+        // Voeg de koper data toe
         JSONObject koperObject = new JSONObject();
         try {
             koperObject.put("kopernaam",userGegevensModel.getUserNaam());
@@ -183,8 +182,6 @@ public class AanvraagActivity extends Activity  {
 
 
         try {
-
-
             //verzenden van het jsonobject
             sendObject.put("aanvraag",koperInfoArray);
 
@@ -207,7 +204,7 @@ public class AanvraagActivity extends Activity  {
         }
     }
 
-
+// Afhandelen van een succesvolle verzending
     public void aanvraagVoltooid(String string){
         Toast.makeText(this,string,
                 Toast.LENGTH_LONG).show();

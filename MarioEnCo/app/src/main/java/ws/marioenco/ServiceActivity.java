@@ -1,5 +1,8 @@
 package ws.marioenco;
-
+/**
+ * Created by Wiebe Steverink on 1/19/2015.
+ * IMTPMD HSLEIDEN
+ */
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -29,9 +32,10 @@ import ws.marioenco.Models.Settings;
 
 public class ServiceActivity extends Activity  {
 
-    // public String ipAdress = "192.168.56.1";
+    // vars
     TextView serviceTag,serviceInfo,headerText;
 
+    // instances
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
     InformatieServiceModel informatieServiceModel = InformatieServiceModel.getInstance();
@@ -44,6 +48,7 @@ public class ServiceActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
 
+        // setup
         customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
         fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome.ttf");
 
@@ -63,14 +68,11 @@ public class ServiceActivity extends Activity  {
 
         headerText.setTypeface(customFont);
 
-//// TODO data gesaved ophalen
-
+        // Checken of er verbinding is, anders hardcoded data laden
         if(settingsData.getisOnline() == true){
             getServicesInfoLong();
         }
         else{
-            //    informatieServiceModel.setInfoServiceHardCoded(serviceLijstModel.getSelectedService());
-
             // Hardcoded  info array
             String hardCoded[] = new String[3];
             hardCoded[0] ="Iedereen vindt het niets meer dan normaal dat als u de WC doorspoelt het water netjes het riool instroomt. Maar wat als dit nu eens niet gebeurt? U spoelt het toilet door maar het water komt omhoog in de WC pot of het water blijft staan? Neem ook hiervoor met spoed contact op met onze loodgieters!";

@@ -2,6 +2,7 @@ package ws.marioenco.Models;
 
 /**
  * Created by Wiebe on 1/19/2015.
+ * Model met settings als IP adres en Online of offline boolean
  */
 public class Settings {
 
@@ -14,9 +15,6 @@ public class Settings {
 
         return _instance;
     }
-//"192.168.56.1";
-
-
 
     private boolean online = true;
     private String ip4Adress = "192.168.178.12";

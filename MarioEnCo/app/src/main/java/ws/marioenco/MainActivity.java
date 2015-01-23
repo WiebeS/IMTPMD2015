@@ -1,5 +1,10 @@
 package ws.marioenco;
 
+/**
+ * Created by Wiebe Steverink on 1/19/2015.
+ * IMTPMD HSLEIDEN
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,13 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 import ws.marioenco.Helpers.ClientHelper;
 import ws.marioenco.Models.InformatieServiceBeknoptModel;
 import ws.marioenco.Models.ServiceLijstModel;
@@ -29,18 +31,19 @@ import ws.marioenco.Models.Settings;
 
 public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
-    // public String ipAdress = "192.168.56.1";
+    //Vars
     TextView bisInfo,serviceTag,serviceInfo,headerText;
     Button nextButton;
     Spinner spinner1;
 
     Typeface customFont,fontAwesome;
 
-
+    // Instances
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
     InformatieServiceBeknoptModel informatieServiceBeknoptModel = InformatieServiceBeknoptModel.getInstance();
 
+    // Opgeslaan mogelijk maken
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefsss" ;
     public static final String Pos = "posKey";
@@ -49,7 +52,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //setup
         bisInfo = (TextView) findViewById(R.id.bisInfoTextView);
         serviceTag = (TextView) findViewById(R.id.serviceTextView);
         serviceInfo = (TextView) findViewById(R.id.servicesInfoShort);
@@ -68,10 +71,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         nextButton.setText(R.string.fa_right);
 
         // Inladen van de service Lijst
-       ArrayList<String> list;
-
+        ArrayList<String> list;
         list = serviceLijstModel.getServicesLijst();
 
+        // Menu spinner vullen met opgehaalde services lijst
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (this, R.layout.spinneritem, list);
 
@@ -130,9 +133,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
         serviceLijstModel.setSelectedService(pos);
         setSelectedServices();
-
-    //    Log.v("Wiebe", "Online offline: "+ settingsData.getisOnline() + "savedPos " + savedPosition + "positielijst " + serviceLijstModel.getSelectedService() + "tag "+ informatieServiceBeknoptModel.getShortInfoService());
-
     }
 
     public void setSelectedServices(){
@@ -142,7 +142,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
             getServicesInfoShort();
         }
         else{
-// Hardcoded short info array
+            // Hardcoded short info array
             String hardCoded[] = new String[3];
             hardCoded[0] = "Uw toiletproblemen in mum van tijd verholpen!";
             hardCoded[1] = "Valt alles in het water? Wij helpen u uit de brand!";
@@ -150,8 +150,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
             informatieServiceBeknoptModel.setShortInfoServiceHardCoded(hardCoded[serviceLijstModel.getSelectedService()]);
         }
-//        // Het saven van de geselecteerde service
-     //   serviceLijstModel.setSelectedService(pos);
 
         // Vullen van textveld welke een kopje is van de beknopte beschrijving
         serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
@@ -197,7 +195,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
                 e.printStackTrace();
             }
         }
-
     }
 
     // functie om met de button verder te gaan naar de volgende pagina.
@@ -217,5 +214,3 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         finish();
     }
 }
-
-// TODO FONTS EN DESIGN!

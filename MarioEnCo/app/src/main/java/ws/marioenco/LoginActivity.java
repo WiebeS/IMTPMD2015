@@ -24,16 +24,18 @@ import ws.marioenco.Models.ServiceLijstModel;
 import ws.marioenco.Models.Settings;
 
 /**
- * Created by Wiebe on 1/20/2015.
+ * Created by Wiebe Steverink on 1/19/2015.
+ * IMTPMD HSLEIDEN
  */
 public class LoginActivity extends Activity {
 
+    // vars
     EditText ipEdit;
     TextView textViewIP,loginHead;
     Button loginButton;
-    Typeface customFont,fontAwesome;
+    Typeface customFont;
 
-
+    // Instances
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
 
@@ -41,51 +43,46 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-// Setup the elements
+        // Setup
         ipEdit = (EditText)findViewById(R.id.editTextIP);
         textViewIP = (TextView) findViewById(R.id.textViewIP);
         loginHead  = (TextView) findViewById(R.id.loginHead);
         loginButton = (Button) findViewById(R.id.loginButton);
 
         customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
-
         loginHead.setTypeface(customFont);
-
         ipEdit.setText(settingsData.getIp4Adress());
     }
 
     public void login(View view){
 
+        // Proberen een connectie te maken het het ingevoerde IP adres
         String ip= String.valueOf(ipEdit.getText());
         settingsData.setIp4Adress(ip);
 
-//        if (settingsData.getisOnline() == true){
-//            //  getServices();
         settingsData.setOnline(true);
 
-            boolean connectionAvailable = getOnlineOffline();
-            if(connectionAvailable == false){
-           //     setServicesHardCoded();
-                serviceLijstModel.setServiceHardCoded();
+        // Boolean zetten adv een connectie of niet
+        boolean connectionAvailable = getOnlineOffline();
+        if(connectionAvailable == false){
 
-                noConnectionMessage();
-            }
+            serviceLijstModel.setServiceHardCoded();
+            noConnectionMessage();
+        }
 
-            else if (connectionAvailable == true){
+        else if (connectionAvailable == true){
 
-                getServices();
-                connectionMessage();
-            }
+            getServices();
+            connectionMessage();
+        }
 
-//        }
-
-        // TODO OFFLINE
-        // Load next page
+        // next page
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    // Services opvragen
     public void getServices() {
         //aanmaken van een nieuw jsonobject
         JSONObject serviceObject = new JSONObject();
@@ -114,16 +111,13 @@ public class LoginActivity extends Activity {
             try {
                 services = new JSONArray(reactie);
 
-                //  String test = String.valueOf(services.get("naam"));
-
-                Log.v("wiebe", "JA" );
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            // Clear array
             serviceLijstModel.clearService();
 
+            // Vullen array
             for (int i = 0 ; i < services.length(); i++)
             {
                 try {
@@ -137,7 +131,6 @@ public class LoginActivity extends Activity {
                 }
             }
         }
-
     }
 
     public boolean getOnlineOffline() {
@@ -167,35 +160,35 @@ public class LoginActivity extends Activity {
             }
 
         }
-        // TODO hierb ezig
-
-        Log.v("wiebe", String.valueOf(settingsData.getisOnline()));
 
         return settingsData.getisOnline();
     }
 
+    // Error msg
     public void noConnectionMessage(){
 
         Toast.makeText(this, R.string.errorConnection,
                 Toast.LENGTH_LONG).show();
     }
 
+    // Welkom msg
     public void connectionMessage(){
 
         Toast.makeText(this, R.string.connection,
                 Toast.LENGTH_LONG).show();
     }
 
-   public void setServicesHardCoded(){
 
-       ArrayList<String> services = new ArrayList<String>();
-       services.add("Riolering");
-       services.add("Dak Lekkage");
-       services.add("Prinses In Nood");
+    public void setServicesHardCoded(){
 
-       serviceLijstModel.clearService();
-       serviceLijstModel.setServicesLijst(services);
-   }
+        ArrayList<String> services = new ArrayList<String>();
+        services.add("Riolering");
+        services.add("Dak Lekkage");
+        services.add("Prinses In Nood");
+
+        serviceLijstModel.clearService();
+        serviceLijstModel.setServicesLijst(services);
+    }
 
 }
 

@@ -3,8 +3,6 @@ package ws.marioenco.Helpers;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -16,10 +14,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-
-import ws.marioenco.MainActivity;
 import ws.marioenco.Models.Settings;
-import ws.marioenco.R;
 
 /**
  * Created by Wiebe on 1/19/2015.
@@ -93,9 +88,6 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
 
                 StringBuilder stringBouwer = new StringBuilder();
 
-            // TODO   hier nalopen waarom de NULL er niet uitgefulterd wordt
-                // Er is nu de I ingevoegd zodat er pas 1 x draaien een string wordt toegevoegd
-
                 int i =0;
 
                 String line;
@@ -110,8 +102,6 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
                         stringBouwer.append(line);
                     }
                     i++;
-
-
                 }
                 reactieStreamReader.close();
 
@@ -126,15 +116,14 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
         catch( UnknownHostException e )
         {
             Log.v("debug", "can't find host");
+            // Boolean om online of offline modus data te gebruiken
             settingsData.setOnline(false);
-
-            // TODO hier de offline modus maken
-
         }
 
         catch( SocketTimeoutException e )
         {
              Log.v("debug", "time-out");
+            // Boolean om online of offline modus data te gebruiken
             settingsData.setOnline(false);
         }
 
@@ -143,9 +132,6 @@ public class ClientHelper  extends AsyncTask<Void, Void, String>
             e.printStackTrace();
             settingsData.setOnline(false);
          }
-
         return reactie;
     }
-
-
 }
