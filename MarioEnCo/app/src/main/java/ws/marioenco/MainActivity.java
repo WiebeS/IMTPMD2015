@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,9 +36,12 @@ import ws.marioenco.Models.Settings;
 public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     // public String ipAdress = "192.168.56.1";
-    TextView bisInfo,serviceTag,serviceInfo;
+    TextView bisInfo,serviceTag,serviceInfo,headerText;
     Button nextButton;
     Spinner spinner1;
+
+    Typeface customFont;
+
 
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
@@ -55,26 +59,23 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         bisInfo = (TextView) findViewById(R.id.bisInfoTextView);
         serviceTag = (TextView) findViewById(R.id.serviceTextView);
         serviceInfo = (TextView) findViewById(R.id.servicesInfoShort);
+        headerText = (TextView) findViewById(R.id.headerText);
 
         nextButton = (Button) findViewById(R.id.nextButton);
         spinner1 = (Spinner) findViewById(R.id.spinner);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
+        headerText.setTypeface(customFont);
+       // headerText.setTextSize(80);
+
+
+
         // Inladen van de service Lijst
        ArrayList<String> list;
 
-        // TODO OFFLINE
-
-        //      if (settingsData.getisOnline() == true){
         list = serviceLijstModel.getServicesLijst();
-        //     }
-//        else if (settingsData.getisOnline() == false) {
-//            // TODO data gesaved ophalen
-//            list.add("Riolering1");
-//            list.add("Lekkage1");
-//            list.add("Prinses in nood1");
-//        }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (this, R.layout.spinneritem, list);
