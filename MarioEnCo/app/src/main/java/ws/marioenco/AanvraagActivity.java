@@ -2,11 +2,13 @@ package ws.marioenco;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,9 @@ public class AanvraagActivity extends Activity  {
 
     TextView serviceTag,serviceInfo;
     EditText naam,adres,tel,mail;
+    Button backButton;
+
+    Typeface customFont,fontAwesome;
 
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
@@ -38,6 +43,8 @@ public class AanvraagActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aanvraag);
 
+        fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome.ttf");
+
         serviceTag = (TextView) findViewById(R.id.serviceTextViewServiceAanvraag);
         serviceInfo = (TextView) findViewById(R.id.servicesInfoAanvraag);
 
@@ -45,6 +52,10 @@ public class AanvraagActivity extends Activity  {
         adres = (EditText) findViewById(R.id.adresEdit);
         tel = (EditText) findViewById(R.id.telEdit);
         mail = (EditText) findViewById(R.id.mailEdit);
+
+        backButton = (Button) findViewById(R.id.backButtonAanvraag);
+        backButton.setTypeface(fontAwesome);
+        backButton.setText(R.string.fa_left);
 
         serviceTag.setText(serviceLijstModel.getServicesLijst().get(serviceLijstModel.getSelectedService()));
         // Tonen van beknopte info

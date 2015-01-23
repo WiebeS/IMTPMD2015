@@ -2,6 +2,7 @@ package ws.marioenco;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,19 +30,38 @@ import ws.marioenco.Models.Settings;
 public class ServiceActivity extends Activity  {
 
     // public String ipAdress = "192.168.56.1";
-    TextView serviceTag,serviceInfo;
+    TextView serviceTag,serviceInfo,headerText;
 
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
     InformatieServiceModel informatieServiceModel = InformatieServiceModel.getInstance();
+
+    Typeface customFont,fontAwesome;
+    Button backButton,nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
 
+        customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
+        fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome.ttf");
+
         serviceTag = (TextView) findViewById(R.id.serviceTextViewService);
         serviceInfo = (TextView) findViewById(R.id.servicesInfoLong);
+        headerText = (TextView) findViewById(R.id.servicehead);
+        backButton = (Button) findViewById(R.id.backButtonService);
+        nextButton = (Button) findViewById(R.id.nextButtonService);
+
+        headerText.setTypeface(customFont);
+        backButton.setTypeface(fontAwesome);
+        nextButton.setTypeface(fontAwesome);
+
+        backButton.setText(R.string.fa_left);
+        nextButton.setText(R.string.fa_right);
+
+
+        headerText.setTypeface(customFont);
 
 //// TODO data gesaved ophalen
 

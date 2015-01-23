@@ -2,6 +2,7 @@ package ws.marioenco;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +29,10 @@ import ws.marioenco.Models.Settings;
 public class LoginActivity extends Activity {
 
     EditText ipEdit;
-    TextView textViewIP;
+    TextView textViewIP,loginHead;
     Button loginButton;
+    Typeface customFont,fontAwesome;
+
 
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
@@ -41,7 +44,12 @@ public class LoginActivity extends Activity {
 // Setup the elements
         ipEdit = (EditText)findViewById(R.id.editTextIP);
         textViewIP = (TextView) findViewById(R.id.textViewIP);
+        loginHead  = (TextView) findViewById(R.id.loginHead);
         loginButton = (Button) findViewById(R.id.loginButton);
+
+        customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
+
+        loginHead.setTypeface(customFont);
 
         ipEdit.setText(settingsData.getIp4Adress());
     }

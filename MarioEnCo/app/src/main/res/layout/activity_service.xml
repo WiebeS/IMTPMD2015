@@ -23,22 +23,31 @@
                 android:layout_height="fill_parent">
 
                 <ImageView
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:id="@+id/imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView4"
                     android:layout_margin="8dp"
-                    android:background="@drawable/logo" />
+                    android:background="@drawable/logo"
+                    android:layout_weight="12" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mario&amp;Co"
-                    android:id="@+id/headerText"
+                    android:id="@+id/servicehead"
                     android:textSize="50dp"
                     android:autoText="false"
                     android:textColor="#ffffffff"
                     android:textStyle="bold"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:layout_weight="6" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/logo2"
+                    android:layout_weight="12" />
             </LinearLayout>
 
         </LinearLayout>
@@ -97,7 +106,7 @@
             android:weightSum="10">
 
             <Button
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text="&lt;"
                 android:id="@+id/backButtonService"
@@ -108,7 +117,7 @@
                 android:layout_weight="5" />
 
             <Button
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:text=">"
                 android:id="@+id/nextButtonService"

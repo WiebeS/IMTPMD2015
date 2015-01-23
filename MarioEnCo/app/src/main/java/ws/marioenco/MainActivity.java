@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,19 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import ws.marioenco.Controllers.ServicesController;
 import ws.marioenco.Helpers.ClientHelper;
-import ws.marioenco.Helpers.CustomOnItemSelectedListener;
 import ws.marioenco.Models.InformatieServiceBeknoptModel;
 import ws.marioenco.Models.ServiceLijstModel;
 import ws.marioenco.Models.Settings;
@@ -40,7 +34,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     Button nextButton;
     Spinner spinner1;
 
-    Typeface customFont;
+    Typeface customFont,fontAwesome;
 
 
     Settings settingsData = Settings.getInstance();
@@ -67,10 +61,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
+        fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome.ttf");
         headerText.setTypeface(customFont);
-       // headerText.setTextSize(80);
 
-
+        nextButton.setTypeface(fontAwesome);
+        nextButton.setText(R.string.fa_right);
 
         // Inladen van de service Lijst
        ArrayList<String> list;
