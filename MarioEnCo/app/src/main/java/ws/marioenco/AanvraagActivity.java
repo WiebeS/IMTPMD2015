@@ -29,11 +29,11 @@ import ws.marioenco.Models.UserGegevensModel;
 public class AanvraagActivity extends Activity  {
 
     // Vars
-    TextView serviceTag,serviceInfo;
+    TextView serviceTag,serviceInfo,headerText;
     EditText naam,adres,tel,mail;
     Button backButton;
     // Font awesome
-    Typeface fontAwesome;
+    Typeface fontAwesome,customFont;
     // Get instances van de models
     Settings settingsData = Settings.getInstance();
     ServiceLijstModel serviceLijstModel = ServiceLijstModel.getInstance();
@@ -48,9 +48,13 @@ public class AanvraagActivity extends Activity  {
 
         // setup
         fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome.ttf");
+        customFont = Typeface.createFromAsset(getAssets(), "fonts/customfont.ttf");
 
         serviceTag = (TextView) findViewById(R.id.serviceTextViewServiceAanvraag);
         serviceInfo = (TextView) findViewById(R.id.servicesInfoAanvraag);
+        headerText = (TextView) findViewById(R.id.headerTextAanvraag);
+
+        headerText.setTypeface(customFont);
 
         naam = (EditText) findViewById(R.id.naamEdit);
         adres = (EditText) findViewById(R.id.adresEdit);

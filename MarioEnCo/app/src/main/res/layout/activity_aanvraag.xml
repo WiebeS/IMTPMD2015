@@ -23,9 +23,9 @@
                 android:layout_height="fill_parent">
 
                 <ImageView
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:id="@+id/imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/imageView5"
                     android:layout_margin="8dp"
                     android:background="@drawable/logo" />
 
@@ -33,12 +33,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mario&amp;Co"
-                    android:id="@+id/headerText"
+                    android:id="@+id/headerTextAanvraag"
                     android:textSize="50dp"
                     android:autoText="false"
                     android:textColor="#ffffffff"
                     android:textStyle="bold"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:layout_weight="1" />
+
             </LinearLayout>
 
         </LinearLayout>
